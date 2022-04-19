@@ -1,16 +1,27 @@
-const { createUser } = require('../services/userService');
+const User = require('../services/userService');
 const token = require('../services/generateToken');
 
-const userController = async (req, res, _next) => {
+const userCreate = async (req, res, _next) => {
   const { displayName, email, password } = req.body;
   try {
-    const user = await createUser({ displayName, email, password });
+    const user = await User.userCreate({ displayName, email, password });
     return res.status(201).json({ token: token(user) });
   } catch (err) {
     return res.status(500).json(err);
   }
 };
 
+const getAllUsers = async (req, res, _next) => {
+  const { id, displayName, email, image } = req.body;
+  try {
+    const users = await User.getAllUsers({ id, displayName, email, image });
+    return res.status(200).json(users);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
 module.exports = {
-  userController,
+  userCreate,
+  getAllUsers,
 };
