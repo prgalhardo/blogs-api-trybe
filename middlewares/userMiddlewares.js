@@ -42,6 +42,6 @@ const userValidate = async (req, res, next) => {
 };
 
 module.exports = {
-  equalEmailValidate,
   userValidate,
+  equalEmailValidate,
 };
