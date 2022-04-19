@@ -5,7 +5,7 @@ const userCreate = async (req, res, _next) => {
   const { displayName, email, password } = req.body;
   try {
     const user = await User.userCreate({ displayName, email, password });
-    return res.status(201).json({ token: token(user) });
+    return res.status(201).json({ token: token(user.id) });
   } catch (err) {
     return res.status(500).json(err);
   }
