@@ -5,8 +5,8 @@ const userCreate = async ({ displayName, email, password }) => {
   return user;
 };
 
-const getAllUsers = async ({ id, displayName, email, image }) => {
-  const users = await User.findAll({ id, displayName, email, image });
+const getAllUsers = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
   return users;
 };
 
