@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const RouterUser = require('./routes/routesUser');
 const RouterLogin = require('./routes/routesLogin');
+const RouterCategories = require('./routes/routesCategories');
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
@@ -18,3 +19,4 @@ app.use(bodyParser.json());
 
 app.use('/user', RouterUser);
 app.use('/login', RouterLogin);
+app.use('/categories', RouterCategories);
