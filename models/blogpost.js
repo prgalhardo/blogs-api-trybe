@@ -3,7 +3,7 @@ const modelBlogPost = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     userId: DataTypes.INTEGER,
-  });
+  }, { createdAt: 'published', updatedAt: 'updated' });
 
   blogPost.associate = (models) => {
     blogPost.belongsTo(models.User, {
