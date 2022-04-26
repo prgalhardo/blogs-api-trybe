@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { Category, BlogPost } = require('../models');
 
 const error = (status, message) => ({ status, message });
 
@@ -35,7 +35,15 @@ const blogPostValidate = async (req, res, next) => {
   }
 };
 
+const findByIdValidate = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await BlogPost.findByPk(id);
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });
+  next();
+};
+
 module.exports = {
   blogPostValidate,
   verifyCategoryId,
+  findByIdValidate,
 };
