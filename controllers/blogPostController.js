@@ -47,7 +47,6 @@ const deletePost = async (req, res, _next) => {
     const delPost = await Post.deletePost({ id });
     return res.status(204).json(delPost);
   } catch (err) {
-    console.log(err);
     return res.status(500).status(err);
   }
 };

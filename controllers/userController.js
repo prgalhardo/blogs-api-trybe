@@ -30,8 +30,20 @@ const findById = async (req, res, _next) => {
   }
 };
 
+const deleteUser = async (req, res, _next) => {
+  const { userId } = req.user;
+  console.log(req.user);
+  try {
+    const delUser = await User.deleteUser({ userId });
+    return res.status(204).json(delUser);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
 module.exports = {
   userCreate,
   getAllUsers,
   findById,
+  deleteUser,
 };
