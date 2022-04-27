@@ -14,6 +14,10 @@ const categoryIdsValidation = (categoryIds) => {
   if (!categoryIds) throw error(400, '"categoryIds" is required');
 };
 
+const categoryIdsUpdateValidation = (categoryIds) => {
+  if (categoryIds) throw error(400, 'Categories cannot be edited');
+};
+
 const verifyCategoryId = async (req, res, next) => {
   const { categoryIds } = req.body;
   const compareIds = categoryIds.map((id) => Category.findOne({ where: id }));
@@ -23,7 +27,7 @@ const verifyCategoryId = async (req, res, next) => {
   next();
 };
 
-const blogPostValidate = async (req, res, next) => {
+const blogPostCreateValidate = async (req, res, next) => {
   const { title, content, categoryIds } = req.body;
   try {
     titleValidation(title);
@@ -42,8 +46,30 @@ const findByIdValidate = async (req, res, next) => {
   next();
 };
 
+const blogPostUpdateValidate = async (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+  try {
+    titleValidation(title);
+    contentValidation(content);
+    categoryIdsUpdateValidation(categoryIds);
+    next();
+  } catch (err) {
+    return res.status(err.status).json({ message: err.message });
+  }
+};
+
+const verifyUserId = async (req, res, next) => {
+  const { userId } = req.user;
+  const { id } = req.params;
+  const post = await BlogPost.findOne({ where: { id } });
+  if (post.userId !== userId) return res.status(401).json({ message: 'Unauthorized user' });
+  next();
+};
+
 module.exports = {
-  blogPostValidate,
+  blogPostCreateValidate,
   verifyCategoryId,
   findByIdValidate,
+  blogPostUpdateValidate,
+  verifyUserId,
 };

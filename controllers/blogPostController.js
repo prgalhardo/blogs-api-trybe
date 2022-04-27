@@ -16,7 +16,6 @@ const getAllPosts = async (req, res, _next) => {
     const posts = await Post.getAllPosts();
     return res.status(200).json(posts);
   } catch (err) {
-    console.log(err);
     return res.status(500).json(err);
   }
 };
@@ -31,8 +30,20 @@ const findById = async (req, res, _next) => {
   }
 };
 
+const updatePost = async (req, res, _next) => {
+  const { title, content } = req.body;
+  const { id } = req.params;
+  try {
+    const post = await Post.updatePost({ id, title, content });
+    return res.status(200).json(post);
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
 module.exports = {
   postCreate,
   getAllPosts,
   findById,
+  updatePost,
 };
